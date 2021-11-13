@@ -159,6 +159,8 @@ class Ventana(QtWidgets.QMainWindow):
 
     def esString(self, value):
         try:
+            if(value == ""):
+                return False
             str(value)
             return True
         except ValueError:

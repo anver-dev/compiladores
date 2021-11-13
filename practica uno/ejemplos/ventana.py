@@ -1,3 +1,9 @@
+'''
+    Creado el 12/11/2021
+
+    @author: Ana Karina Vergara Guzmán
+    @description: Ejemplo de una ventana gráfica. 
+'''
 import os
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
