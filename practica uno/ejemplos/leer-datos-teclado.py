@@ -1,5 +1,7 @@
 '''
-    @author: Anver
+    Creado el 10/11/2021
+
+    @author: Ana Karina Vergara Guzmán
     @description: Sumar dos enteros ingresador por un usuario
 '''
 
