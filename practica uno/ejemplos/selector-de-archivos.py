@@ -1,3 +1,9 @@
+'''
+    Creado el 12/11/2021
+
+    @author: Ana Karina Vergara Guzmán
+    @description: Ventana para cargar el contenido de una archivo de texto.
+'''
 import os
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -11,18 +17,18 @@ class Ventana(QtWidgets.QMainWindow):
         super(Ventana, self).__init__()
 
         self.setGeometry(50, 50, 500, 300)
-        self.setWindowTitle("Contador de tokens")
+        self.setWindowTitle("Abrir un archivo")
         self.setWindowIcon(QtGui.QIcon(scriptDir + os.path.sep + "icon.png"))
 
 
         self.openFile = QtWidgets.QAction(QtGui.QIcon(
-            scriptDir + os.path.sep + 'open.png'), '&Abrir Archivo', self)
+            scriptDir + os.path.sep + 'img/open.png'), '&Abrir Archivo', self)
         self.openFile.setShortcut("Ctrl+O")
         self.openFile.setStatusTip("Abrir Archivo")
         self.openFile.triggered.connect(self.abrir_archivo)
 
         EventoSalir = QtWidgets.QAction(QtGui.QIcon(
-            scriptDir + os.path.sep + 'salir.png'), "Salir", self)
+            scriptDir + os.path.sep + 'img/salir.png'), "Salir", self)
         EventoSalir.setShortcut("Ctrl+Q")
         # Agrega un tooltip
         EventoSalir.setStatusTip("Salir de la aplicaión")
@@ -45,7 +51,7 @@ class Ventana(QtWidgets.QMainWindow):
 
         EventoAbrirLocal = QtWidgets.QAction(
             QtGui.QIcon(
-            scriptDir + os.path.sep + 'open.png'), 'Abrir un Archivo', self)
+            scriptDir + os.path.sep + 'img/open.png'), 'Abrir un Archivo', self)
         EventoAbrirLocal.triggered.connect(self.abrir_archivo)
 
         self.BarraOpciones = self.addToolBar("Archivo")
@@ -54,7 +60,7 @@ class Ventana(QtWidgets.QMainWindow):
 
         self.EventoSalirLocal = QtWidgets.QAction(
             QtGui.QIcon(
-            scriptDir + os.path.sep + 'exit.png'), 'Salir del programa', self)
+            scriptDir + os.path.sep + 'img/exit.png'), 'Salir del programa', self)
         self.EventoSalirLocal.triggered.connect(self.cierra_aplicacion)
 
         self.BarraOpciones.addAction(self.EventoSalirLocal)
