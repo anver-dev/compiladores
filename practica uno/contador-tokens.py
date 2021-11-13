@@ -18,16 +18,16 @@ class Ventana(QtWidgets.QMainWindow):
         self.setGeometry(50, 50, 650, 450)
         self.setWindowTitle("Ejemplo ventana")
         self.setWindowIcon(QtGui.QIcon(
-            self.scriptDir + os.path.sep + "icon.png"))
+            self.scriptDir + os.path.sep + "img/icon.png"))
 
         self.openFile = QtWidgets.QAction(QtGui.QIcon(
-            self.scriptDir + os.path.sep + 'open.png'), '&Abrir Archivo', self)
+            self.scriptDir + os.path.sep + 'img/open.png'), '&Abrir Archivo', self)
         self.openFile.setShortcut("Ctrl+O")
         self.openFile.setStatusTip("Abrir Archivo")
         self.openFile.triggered.connect(self.abrirArchivo)
 
         EventoSalir = QtWidgets.QAction(QtGui.QIcon(
-            self.scriptDir + os.path.sep + 'salir.png'), "Salir", self)
+            self.scriptDir + os.path.sep + 'img/salir.png'), "Salir", self)
         EventoSalir.setShortcut("Ctrl+Q")
         EventoSalir.setStatusTip("Salir de la aplicaión")
         EventoSalir.triggered.connect(self.cierraAplicacion)
@@ -69,7 +69,7 @@ class Ventana(QtWidgets.QMainWindow):
 
         EventoAbrirLocal = QtWidgets.QAction(
             QtGui.QIcon(
-                self.scriptDir + os.path.sep + 'open.png'), 'Abrir un Archivo', self)
+                self.scriptDir + os.path.sep + 'img/open.png'), 'Abrir un Archivo', self)
         EventoAbrirLocal.triggered.connect(self.abrirArchivo)
 
         self.btn_ContarTokens.clicked.connect(self.contarTokens)
@@ -79,7 +79,7 @@ class Ventana(QtWidgets.QMainWindow):
 
         self.EventoSalirLocal = QtWidgets.QAction(
             QtGui.QIcon(
-                self.scriptDir + os.path.sep + 'exit.png'), 'Salir del programa', self)
+                self.scriptDir + os.path.sep + 'img/exit.png'), 'Salir del programa', self)
         self.EventoSalirLocal.triggered.connect(self.cierraAplicacion)
 
         self.BarraOpciones.addAction(self.EventoSalirLocal)
@@ -217,7 +217,7 @@ class Ventana(QtWidgets.QMainWindow):
         msgbox.setDefaultButton(QtWidgets.QMessageBox.No)
 
         msgbox.setWindowIcon(QtGui.QIcon(
-            self.scriptDir + os.path.sep + 'warning.png'))
+            self.scriptDir + os.path.sep + 'img/warning.png'))
         reply = msgbox.exec()
 
         if(reply == QtWidgets.QMessageBox.Yes):
