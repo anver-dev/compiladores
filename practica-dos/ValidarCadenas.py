@@ -1,8 +1,7 @@
 '''
-Creado el: 12/11/2021
+Creado el: 21/11/2021
 @author: Ana Karina Vergara Guzmán
-@desciption: Programa que cuenta el total de tokens de tipo entero, flotante, booleanos, char y string
-            en un archivo de texto.
+@desciption: Programa que valida si una cadena pertenece a un autómata dado.
 
 '''
 import os
