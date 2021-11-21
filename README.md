@@ -1,6 +1,8 @@
 # Compiladores
+<p align="justify">
+    
 En el inicio de las maquinas, estas ejecutaban instrucciones en códigos numéricos que indicaban a sus circuitos los estados correspondientes a cada operación. A estos códigos los llamamos __Lenguaje Máquina__.
-
+    
 Tiempo después, los usuarios de estas máquinas establecieron claves que constituyen   los   llamados   lenguajes   __ensambladores__, mismos que se generalizaron en cuanto se dio el paso decisivo de hacer que las propias máquinas realizaran el proceso mecánico de la traducción. A este trabajo se le llama _ensamblar el programa_.
 
 En 1954 empezó el desarrollo de un lenguaje que permitía escribir fórmulas matemáticas de manera traducible por una máquina. Le llamaron FORTRAN y fue el primer lenguaje considerado de alto nivel.
@@ -8,11 +10,12 @@ En 1954 empezó el desarrollo de un lenguaje que permitía escribir fórmulas ma
 Fue así como surgió, por primera vez, el concepto de un __traductor__, como un programa que traducía un lenguaje a otro lenguaje. En el caso particular de que el lenguaje a traducir es un lenguaje de alto nivel y el lenguaje traducido de bajo nivel (Lenguaje Máquina), se emplea el término __compilador__.
 
 Ahora bien, ¿en qué consiste un compilador? 
-<div style="text-align: center"> <img src="img/fases_compilador.jpg" heigh="30" width="250"> </div>
+<p align="center"><img src="img/fases_compilador.jpg" heigh="30" width="250"></p>
 
 El compilador recibe un código fuente y como se aprecia en la Imagen anterior, consta de múltiples fases: 
 
 1. __Analizador léxico__: lee carácter por carácter y los agrupa en secuencias con significado colectivo y mínimo en el lenguaje, llamadas token. La salida del analizador son tablas relacionadas con lo anterior. Por ejemplo, si la entrada al analizador fuera: <code> numero = 5 </code> la tabla correspondiente sería:
+    <p align="center"></p>
 
     |        | Tipo          | Valor  |
     |--------|---------------|--------|
@@ -21,8 +24,7 @@ El compilador recibe un código fuente y como se aprecia en la Imagen anterior, 
     | 5      | entero        | 5      |
 
 2. __Analizador sintáctico__: intenta generar un árbol sintáctico que encaje con la sentencia de entrada (los tokens proporcionados por el analizador léxico). Un ejemplo de árbol sería: 
-
-<div style="text-align: center"> <img src="img/arbol_sintactico.png" heigh="30" width="180"> </div>
+<p align="center"><img src="img/arbol_sintactico.png" heigh="30" width="180"> </p>
 
 
 3.	__Analizador semántico__: se realizan chequeos para asegurar que los componentes del programa encajan significativamente, como por ejemplo chequeo de tipos.
@@ -51,13 +53,11 @@ Adicional a esto, tenemos dos partes del compilador que se comparten con todas l
 2. __Generador de errores__: informa al compilador donde hay errores y de que tipo son. Este generador debe continuar el proceso aun cuando encuentre errores y solo debe mostrarlos al final del análisis. Cabe mencionar que no puede detectar errores en tiempo de ejecución. 
 
 Entonces tenemos que la estructura del compilador queda de la siguiente forma: 
-
-<div style="text-align: center"> <img src="img/estructura_compilador.png" heigh="30" width="250"> </div>
+<p align="center"><img src="img/estructura_compilador.png" heigh="30" width="250"></p>
 
 
 Como se observa en la imagen, el compilador consta de una parte de análisis y otra de síntesis (o frontend y backend respectivamente como se menciona en la Imagen 1). 
 - __Análisis__ (frontend): en la que se analiza el programa fuente para dividirlo en componentes y extraer de algún modo el significado.
 
 - __Síntesis__ (backend): en la que el significado obtenido se escribe en el lenguaje objeto (o lenguaje maquina). 
-
-
+</p>
