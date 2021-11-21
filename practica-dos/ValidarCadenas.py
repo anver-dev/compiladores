@@ -38,54 +38,54 @@ class Ventana(QMainWindow):
 
     def home(self):
         # Título
-        self.titulo_lbl = QLabel(self)
-        self.titulo_lbl.setText('Automata Finito Determinista - AFD')
-        self.titulo_lbl.setFont(QFont("Arial", 14, QFont.Black))
-        self.titulo_lbl.move(250, 80)
-        self.titulo_lbl.adjustSize()
+        self.Titulo_lbl = QLabel(self)
+        self.Titulo_lbl.setText('Automata Finito Determinista - AFD')
+        self.Titulo_lbl.setFont(QFont("Arial", 14, QFont.Black))
+        self.Titulo_lbl.move(250, 80)
+        self.Titulo_lbl.adjustSize()
 
         # Imagen
-        self.label = QLabel(self)
-        self.pixmap = QPixmap(
+        self.Img_lbl = QLabel(self)
+        self.Pixmap = QPixmap(
             self.scriptDir + os.path.sep + 'img/automata.png')
-        self.label.setPixmap(self.pixmap)
-        self.label.resize(self.pixmap.width(), self.pixmap.height())
-        self.label.move(150, 120)
+        self.Img_lbl.setPixmap(self.Pixmap)
+        self.Img_lbl.resize(self.Pixmap.width(), self.Pixmap.height())
+        self.Img_lbl.move(150, 120)
 
         # Lenguaje
-        self.sigma_lbl = QLabel(self)
-        self.sigma_lbl.setText('Lenguaje Sigma = { 1, 0 }')
-        self.sigma_lbl.setFont(QFont("Arial", 12, QFont.Black))
-        self.sigma_lbl.move(130, 320)
-        self.sigma_lbl.adjustSize()
+        self.Sigma_lbl = QLabel(self)
+        self.Sigma_lbl.setText('Lenguaje Sigma = { 1, 0 }')
+        self.Sigma_lbl.setFont(QFont("Arial", 12, QFont.Black))
+        self.Sigma_lbl.move(130, 320)
+        self.Sigma_lbl.adjustSize()
 
         # Cadena a evaluar
-        self.cadena_a_evaluar_lbl = QLabel(self)
-        self.cadena_a_evaluar_lbl.setText('Proporcione una cadena a evaluar: ')
-        self.cadena_a_evaluar_lbl.setFont(QFont("Arial", 11, QFont.Bold))
-        self.cadena_a_evaluar_lbl.move(130, 360)
-        self.cadena_a_evaluar_lbl.adjustSize()
+        self.CadenaAEvaluar_lbl = QLabel(self)
+        self.CadenaAEvaluar_lbl.setText('Proporcione una cadena a evaluar: ')
+        self.CadenaAEvaluar_lbl.setFont(QFont("Arial", 11, QFont.Bold))
+        self.CadenaAEvaluar_lbl.move(130, 360)
+        self.CadenaAEvaluar_lbl.adjustSize()
 
-        self.cadena_a_evaluar = QLineEdit(self)
-        self.cadena_a_evaluar.resize(300, 25)
-        self.cadena_a_evaluar.move(390, 360)
+        self.CadenaAEvaluar_input = QLineEdit(self)
+        self.CadenaAEvaluar_input.resize(300, 25)
+        self.CadenaAEvaluar_input.move(390, 360)
 
         # Comprobar cadena
-        self.btn_comprobar_cadena = QPushButton("Comprobar", self)
-        self.btn_comprobar_cadena.clicked.connect(self.comprobarCadena)
-        self.btn_comprobar_cadena.resize(160, 30)
-        self.btn_comprobar_cadena.move(130, 400)
+        self.ComprobarCadena_btn = QPushButton("Comprobar", self)
+        self.ComprobarCadena_btn.clicked.connect(self.comprobarCadena)
+        self.ComprobarCadena_btn.resize(160, 30)
+        self.ComprobarCadena_btn.move(130, 400)
 
         # Resultado de la evaluación
-        self.resultado_evaluacion_lbl = QLabel(self)
-        self.resultado_evaluacion_lbl.setText('Resultado de la evaluación: ')
-        self.resultado_evaluacion_lbl.setFont(QFont("Arial", 11, QFont.Bold))
-        self.resultado_evaluacion_lbl.move(130, 460)
-        self.resultado_evaluacion_lbl.adjustSize()
+        self.ResultadoEvaluacion_lbl = QLabel(self)
+        self.ResultadoEvaluacion_lbl.setText('Resultado de la evaluación: ')
+        self.ResultadoEvaluacion_lbl.setFont(QFont("Arial", 11, QFont.Bold))
+        self.ResultadoEvaluacion_lbl.move(130, 460)
+        self.ResultadoEvaluacion_lbl.adjustSize()
 
-        self.resultado_evaluacion = QLineEdit(self)
-        self.resultado_evaluacion.resize(355, 25)
-        self.resultado_evaluacion.move(335, 460)
+        self.ResultadoEvaluacion_output = QLineEdit(self)
+        self.ResultadoEvaluacion_output.resize(355, 25)
+        self.ResultadoEvaluacion_output.move(335, 460)
 
         # Salida de la aplicación
         self.EventoSalirLocal = QAction(
@@ -99,7 +99,7 @@ class Ventana(QMainWindow):
         self.show()
 
     def comprobarCadena(self):
-        cadena = self.cadena_a_evaluar.text()
+        cadena = self.CadenaAEvaluar_input.text()
         objAutomata = AutomataFD()
 
         if self.validarLenguaje(cadena):
@@ -129,13 +129,13 @@ class Ventana(QMainWindow):
         msg.exec_()
     
     def imprimirMensajeDeExito(self, cadena):
-        self.resultado_evaluacion.setText("La cadena '" + cadena + "' SÍ pertenece al lenguaje")
-        self.resultado_evaluacion.setStyleSheet("border: 1px solid green;")
+        self.ResultadoEvaluacion_output.setText("La cadena '" + cadena + "' SÍ pertenece al lenguaje")
+        self.ResultadoEvaluacion_output.setStyleSheet("border: 1px solid green;")
 
     
     def imprimirMensajeDeError(self, cadena):
-        self.resultado_evaluacion.setText("La cadena '" + cadena + "' NO pertenece al lenguaje")
-        self.resultado_evaluacion.setStyleSheet("border: 2px solid red;")
+        self.ResultadoEvaluacion_output.setText("La cadena '" + cadena + "' NO pertenece al lenguaje")
+        self.ResultadoEvaluacion_output.setStyleSheet("border: 2px solid red;")
     
     def cierraAplicacion(self):
         msgbox = QMessageBox(
