@@ -111,12 +111,17 @@ class Ventana(QMainWindow):
             self.cadenaInvalida(cadena)
 
     def validarLenguaje(self, cadena):
+        if not cadena:
+            return False
         for caracter in cadena:
             if caracter != '0' and caracter != '1':
                 return False
         return True
 
     def cadenaInvalida(self, cadena):
+        self.CadenaAEvaluar_input.setText("")
+        self.ResultadoEvaluacion_output.setText("")
+
         msgError = "La cadena '" + cadena + "' es invalida. Intentalo nuevamente"
         
         msg = QMessageBox()
