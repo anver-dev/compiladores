@@ -30,10 +30,10 @@ class AutomataFD:
     def estadoDos(self, cadena, cont):
         if cont < len(cadena) and cadena[cont] == "1":
             cont += 1
-            return self.estadoDos(cadena, cont)
+            return self.estadoCero(cadena, cont)
         elif cont < len(cadena) and cadena[cont] == "0":
             cont += 1
-            return self.estadoCero(cadena, cont)
+            return self.estadoDos(cadena, cont)
         elif cont == len(cadena):
             return True
         else:
