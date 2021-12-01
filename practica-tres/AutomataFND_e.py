@@ -23,7 +23,7 @@ class AutomataFND_e(object):
           return mensaje
 
         else:
-          mensaje = "CADENA NO ACEPTADA"
+          mensaje = "CADENA NO VALIDA"
           return mensaje
 
     

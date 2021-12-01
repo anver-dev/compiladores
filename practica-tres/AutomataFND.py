@@ -15,7 +15,7 @@ class AutomataFND:
         contador = 0
         caminoActual = []
 
-        respuestaEstadoCero = self.estadoCeroACero(
+        respuestaEstadoCero = self.estadoCeroRecursivo(
             cadena, contador, caminoActual)
 
         contador = respuestaEstadoCero[1]
@@ -24,9 +24,9 @@ class AutomataFND:
 
         while(len(caminoActual) > 0):
 
-            if(caminoActual[contador - 1] == "(0,Q0)"):
+            if(caminoActual[contador - 1] == "( 0, Q0 )|"):
 
-                if(caminoActual[contador - 2] == "(0,Q0)"):
+                if(caminoActual[contador - 2] == "( 0, Q0 )|"):
                     contador = contador - 1
                     caminoActual = caminoActual[0:contador]
                     self.estadoCeroAUno(cadena, contador, caminoActual)
@@ -35,13 +35,13 @@ class AutomataFND:
                     contador = contador - 1
                     caminoActual = caminoActual[0:contador]
 
-                    if(len(caminoActual) == 1 and caminoActual[0] == "(1,Q0)"):
+                    if(len(caminoActual) == 1 and caminoActual[0] == "( 1, Q0 )|"):
                         self.estadoCeroAUno(cadena, contador, caminoActual)
             else:
                 contador = contador - 1
                 caminoActual = caminoActual[0:contador]
 
-    def estadoCeroACero(self, cadena, contador, caminoActual):
+    def estadoCeroRecursivo(self, cadena, contador, caminoActual):
         if len(cadena) == contador:
             caminoActual.append("Camino Invalido")
             self.CaminosEncontrados.append(caminoActual)
@@ -50,12 +50,12 @@ class AutomataFND:
         if cadena[contador] == "0":
             caminoActual.append("( 0, Q0 )|")
             contador = contador + 1
-            return self.estadoCeroACero(cadena, contador, caminoActual)
+            return self.estadoCeroRecursivo(cadena, contador, caminoActual)
 
         elif cadena[contador] == "1":
             caminoActual.append("( 1, Q0 )|")
             contador = contador + 1
-            return self.estadoCeroACero(cadena, contador, caminoActual)
+            return self.estadoCeroRecursivo(cadena, contador, caminoActual)
 
 
     def estadoCeroAUno(self, cadena, contador, caminoActual):
@@ -67,7 +67,7 @@ class AutomataFND:
         if cadena[contador] == "1":
             caminoActual.append("( 1, Q0 )|")
             contador = contador + 1
-            return self.estadoCeroACero(cadena, contador, caminoActual)
+            return self.estadoCeroRecursivo(cadena, contador, caminoActual)
 
         elif cadena[contador] == "0":
             caminoActual.append("( 0, Q1 )|")
