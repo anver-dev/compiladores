@@ -14,6 +14,7 @@ from UAMI import Uami
 
 class Ventana(QMainWindow):
     scriptDir = os.path.dirname(os.path.realpath(__file__)) + os.path.sep
+    pathArchivo = ""
 
     def __init__(self):
 
@@ -52,42 +53,54 @@ class Ventana(QMainWindow):
         self.home()
 
     def home(self):
-        self.Contenido_fuente_lbl = QLabel(self)
-        self.Contenido_fuente_lbl.setText('CONTENIDO DEL \nARCHIVO FUENTE:')
-        self.Contenido_fuente_lbl.setFont(QFont("Arial", 10, QFont.Black))
-        self.Contenido_fuente_lbl.move(10, 70)
-        self.Contenido_fuente_lbl.adjustSize()
+        #
+        self.lblNombreArchivo = QLabel(self)
+        self.lblNombreArchivo.setText('Nombre archivo:')
+        self.lblNombreArchivo.setFont(QFont("Arial", 10, QFont.Black))
+        self.lblNombreArchivo.move(10, 70)
+        self.lblNombreArchivo.adjustSize()
 
-        self.Contenido_area = QTextEdit(self)
-        self.Contenido_area.resize(450, 250)
-        self.Contenido_area.move(150, 70)
-        #self.ContenidoArchivo = QTextEdit(self)
+        self.inputNombreArchivo = QLineEdit(self)
+        self.inputNombreArchivo.resize(450, 25)
+        self.inputNombreArchivo.move(150, 70)
+        self.inputNombreArchivo.setReadOnly(True)
 
-        self.Resultados_compilacion_lbl = QLabel(self)
-        self.Resultados_compilacion_lbl.setText(
-            'RESULTADOS DE \nLA COMPILACIÓN:')
-        self.Resultados_compilacion_lbl.setFont(
+        self.lblContenidoAF = QLabel(self)
+        self.lblContenidoAF.setText('Contenido del \narchivo fuente:')
+        self.lblContenidoAF.setFont(QFont("Arial", 10, QFont.Black))
+        self.lblContenidoAF.move(10, 100)
+        self.lblContenidoAF.adjustSize()
+
+        self.txtContenidoAF = QTextEdit(self)
+        self.txtContenidoAF.resize(450, 250)
+        self.txtContenidoAF.move(150, 110)
+        self.txtContenidoAF.setReadOnly(True)
+
+        self.lblResultadosCompilacion = QLabel(self)
+        self.lblResultadosCompilacion.setText(
+            'Resultados de \nla compilación:')
+        self.lblResultadosCompilacion.setFont(
             QFont("Arial", 10, QFont.Black))
-        self.Resultados_compilacion_lbl.move(10, 350)
-        self.Resultados_compilacion_lbl.adjustSize()
+        self.lblResultadosCompilacion.move(10, 390)
+        self.lblResultadosCompilacion.adjustSize()
 
-        self.Resultados_area = QTextEdit(self)
-        self.Resultados_area.resize(450, 200)
-        self.Resultados_area.move(150, 350)
-        self.Resultados_area.setReadOnly(True)
+        self.txtResultadosCompilacion = QTextEdit(self)
+        self.txtResultadosCompilacion.resize(450, 200)
+        self.txtResultadosCompilacion.move(150, 390)
+        self.txtResultadosCompilacion.setReadOnly(True)
 
-        self.Lineas_lbl = QLabel(self)
-        self.Lineas_lbl.setText(
-            'LINEAS \nANALIZADAS:')
-        self.Lineas_lbl.setFont(
+        self.lblLineasAnalizadas = QLabel(self)
+        self.lblLineasAnalizadas.setText(
+            'Lineas analizadas:')
+        self.lblLineasAnalizadas.setFont(
             QFont("Arial", 10, QFont.Black))
-        self.Lineas_lbl.move(10, 570)
-        self.Lineas_lbl.adjustSize()
+        self.lblLineasAnalizadas.move(10, 610)
+        self.lblLineasAnalizadas.adjustSize()
 
-        self.Lineas_input = QLineEdit(self)
-        self.Lineas_input.resize(50, 25)
-        self.Lineas_input.move(150, 570)
-        self.Lineas_input.setReadOnly(True)
+        self.inputLineasAnalizadas = QLineEdit(self)
+        self.inputLineasAnalizadas.resize(50, 25)
+        self.inputLineasAnalizadas.move(150, 610)
+        self.inputLineasAnalizadas.setReadOnly(True)
 
         self.EventoAbrirLocal = QAction(
             QIcon(
@@ -114,10 +127,12 @@ class Ventana(QMainWindow):
 
     def compilar_aplicacion(self):
         objUAMI = Uami()
-        objUAMI.inicia_compilacion(self.pathArchivo, self.Contenido_area)
 
-        self.mostrar_resultados(objUAMI)
-        
+        if self.pathArchivo != "":
+            objUAMI.inicia_compilacion(self.pathArchivo, self.txtContenidoAF)
+            self.mostrar_resultados(objUAMI)
+        else:
+            self.mostrar_alerta_archivo()
 
     def abrir_archivo(self):
         self.pathArchivo = QFileDialog.getOpenFileName(
@@ -125,7 +140,12 @@ class Ventana(QMainWindow):
 
         if(self.pathArchivo):
             self.archivo = open(self.pathArchivo, "r")
-            self.Contenido_area.setText(self.archivo.read())
+            self.txtContenidoAF.setText(self.archivo.read())
+
+            listaSplit = str(self.pathArchivo).split("/")
+            nombreArchivo = listaSplit[len(listaSplit) - 1]
+            
+            self.inputNombreArchivo.setText(str(nombreArchivo))
             self.archivo.close()
 
     def mostrar_resultados(self, objUAMI):
@@ -133,8 +153,25 @@ class Ventana(QMainWindow):
         contenidoTupla = archivoTupla.read()
 
         objUAMI.cierra_archivos()
-        self.Resultados_area.setText(contenidoTupla)
-        self.Lineas_input.setText(str(objUAMI.contadorLineas))
+        self.txtResultadosCompilacion.setText(contenidoTupla)
+        self.inputLineasAnalizadas.setText(str(objUAMI.contadorLineas))
+
+        if objUAMI.banderaError:
+            self.txtResultadosCompilacion.setStyleSheet("border: 2px solid red;")
+        else:
+            self.txtResultadosCompilacion.setStyleSheet("border: 2px solid green;")
+
+    def mostrar_alerta_archivo(self):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Warning)
+        msg.setText("Ningún archivo para compilar")
+        msg.setInformativeText(
+            'Favor de seleccionar un archivo, seleccionando el icono o con Ctr+O')
+        msg.setWindowTitle("Selecciona un archivo")
+        msg.setWindowIcon(QIcon(
+            self.scriptDir + os.path.sep + 'img/warning.png'))
+        msg.exec_()
+
     def cierra_aplicacion(self):
         msgbox = QMessageBox(
             QMessageBox.Question, "Salir de aplicación", "Estás seguro de salir de la aplicación?")

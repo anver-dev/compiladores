@@ -1,10 +1,9 @@
 '''
 Creado el: 01/12/2021
 @author: Ana Karina Vergara Guzmán
-@desciption: clase encargada del manejo de archivo fuente asi como invocacion
-             del Analizador Lexicografico.
-'''
+@desciption: clase encargada de la lógica del Analizador Lexicografico.
 
+'''
 from PalabrasReservadas import PalabrasReservadas
 
 
@@ -13,9 +12,11 @@ class Alex:
     PRODUCTO = "*"
     HECHO = "\0"
     VACIO = " "
+    DIGITO = "d"
 
-    def __init__(self, Contenido_Area):
-        self.contenidoDelArchivo = (Contenido_Area.toPlainText()).split("\n")
+    def __init__(self, txtContenidoAF):
+        self.contenidoDelArchivo = (txtContenidoAF.toPlainText()).split(
+            "\n")  # arreglo de lineas del AF
         self.objPR = PalabrasReservadas()
         self.contador = 0
         self.Buffer = {
@@ -28,60 +29,18 @@ class Alex:
         lexema = self.leer_caracter()
         objUAMI.contadorLineas = self.contador
 
-        if lexema == self.PRODUCTO:
-            return {
-                "token": self.objPR.palabrasReservadas["PRODUCTO"],
-                "lexema": lexema
-            }
-
+        if self.valida_digito(lexema):
+            return self.es_digito(lexema)
         elif lexema == self.SUMA:
-            lexema = lexema + self.leer_caracter()
-
-            if lexema[1] == self.SUMA:
-                return {
-                    "token": self.objPR.palabrasReservadas["INCREMENTO"],
-                    "lexema": lexema
-                }
-
-            else:
-                self.desleer()
-                return {
-                    "token": self.objPR.palabrasReservadas["SUMA"],
-                    "lexema": lexema[0]
-                }
-
-        elif self.valida_digito(lexema):
-            digito = lexema
-
-            while self.valida_digito(digito):
-                digito = self.leer_caracter()
-                lexema = lexema + digito
-
-            lexema = lexema[:-1]
-            self.desleer()
-            return {
-                "token": self.objPR.palabrasReservadas["NUM_ENT"],
-                "lexema": lexema
-            }
-
-        elif lexema == self.HECHO:
-            return {
-                "token": self.objPR.palabrasReservadas["HECHO"],
-                "lexema": lexema
-            }
-
+            return self.es_suma_o_incremento(lexema)
+        elif lexema == self.PRODUCTO:
+            return self.es_producto(lexema)
         elif lexema == self.VACIO:
-            return{
-                "token": "VACIO",
-                "lexema": lexema
-            }
-
+            return self.vacio(lexema)
+        elif lexema == self.HECHO:
+            return self.hecho(lexema)
         else:
-
-            return {
-                "token": self.objPR.palabrasReservadas["ERROR"],
-                "lexema": lexema
-            }
+            return self.error(lexema)
 
     def leer_caracter(self):
         if (self.Buffer["pos_leida"] == self.Buffer["tamaño"]):
@@ -111,6 +70,60 @@ class Alex:
 
     def desleer(self):
         self.Buffer["pos_leida"] = self.Buffer["pos_leida"] - 1
+
+    def es_digito(self, lexema):
+        digito = lexema
+        
+        while self.valida_digito(digito):
+            digito = self.leer_caracter()
+            lexema = lexema + digito
+
+        lexema = lexema[:-1]
+        self.desleer()
+        return {
+            "token": self.objPR.palabrasReservadas["NUM_ENT"],
+            "lexema": lexema
+        }
+
+    def es_suma_o_incremento(self, lexema):
+        lexema = lexema + self.leer_caracter()
+
+        if lexema[1] == self.SUMA:
+            return {
+                "token": self.objPR.palabrasReservadas["INCREMENTO"],
+                "lexema": lexema
+            }
+
+        else:
+            self.desleer()
+            return {
+                "token": self.objPR.palabrasReservadas["SUMA"],
+                "lexema": lexema[0]
+            }
+
+    def es_producto(self, lexema):
+        return {
+            "token": self.objPR.palabrasReservadas["PRODUCTO"],
+            "lexema": lexema
+        }
+
+    def hecho(self, lexema):
+        return {
+            "token": self.objPR.palabrasReservadas["HECHO"],
+            "lexema": lexema
+        }
+
+    def vacio(self, lexema):
+        return{
+            "token": "VACIO",
+            "lexema": lexema
+        }
+
+    def error(self, lexema):
+        return {
+            "token": self.objPR.palabrasReservadas["ERROR"],
+            "lexema": lexema
+        }
 
     def valida_digito(self, cadena):
         try:

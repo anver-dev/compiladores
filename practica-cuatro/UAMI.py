@@ -16,6 +16,7 @@ class Uami(object):
         self.archivoTupla = ""
         self.archivoError = ""
         self.contadorLineas = 0
+        self.banderaError = False
 
     def crear_archivos(self, pathArchivo):
         self.pathArchivoTupla = pathArchivo.replace(".fte", ".tpl")
@@ -44,8 +45,8 @@ class Uami(object):
         self.archivoTupla.close()
         self.archivoError.close()
 
-    def inicia_compilacion(self, pathArchivo, Contenido_Area):
-        objAlex = Alex(Contenido_Area)
+    def inicia_compilacion(self, pathArchivo, txtContenidoAF):
+        objAlex = Alex(txtContenidoAF)
         objPR = PalabrasReservadas()
 
         self.crear_archivos(pathArchivo)
@@ -63,12 +64,14 @@ class Uami(object):
             "\n"
         ]
         self.archivoTupla.writelines(headerTabla)
-        self.archivoTupla.write("===================================================\n")
+        self.archivoTupla.write(
+            "===================================================\n")
 
         self.archivoError.writelines(
-            (Contenido_Area.toPlainText()).split("\n"))
+            (txtContenidoAF.toPlainText()).split("\n"))
 
         diccionario = objAlex.a_lexico(self)
+        print(">>> UAMI: ", diccionario)
 
         while diccionario["token"] != objPR.palabrasReservadas["HECHO"] and diccionario["token"] != objPR.palabrasReservadas["ERROR"]:
             if diccionario["token"] == "VACIO":
@@ -94,9 +97,11 @@ class Uami(object):
                 "\n"
             ]
             self.archivoTupla.writelines(texto)
+            self.banderaError = True
 
         elif diccionario["token"] == objPR.palabrasReservadas["HECHO"]:
-            self.archivoTupla.write("-------------------------------------------------------------------------------------------------------\n")
+            self.archivoTupla.write(
+                "-------------------------------------------------------------------------------------------------------\n")
             texto = [
                 str(self.contadorLineas),
                 "\t\t",

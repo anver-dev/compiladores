@@ -8,7 +8,7 @@ Creado el: 01/12/2021
 
 class PalabrasReservadas:
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.palabrasReservadas = {
             "NUM_ENT": "ENTERO",
             "SUMA": "SUMA",
