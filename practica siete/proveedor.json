@@ -1,0 +1,18 @@
+{
+    "idProveedor": 1,
+    "...",
+    "...",
+    "ciudades": [
+        {
+            "idCiudad": 1,
+            "nombre": "soy una ciudad"
+        }
+    ],
+    "plantas": [
+        {
+            "idPlanta": 1,
+            "nombre": "soy una planta"
+        }
+    ]
+    
+}
